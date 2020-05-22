@@ -2,6 +2,25 @@
 local function place_mirrored(pos, node, mirror_pos, mirrors)
   local mirrored_pos = { x = pos.x, y = pos.y, z = pos.z }
 
+  local node_def = minetest.registered_items[node.name]
+  if node_def.paramtype2 == "facedir" then
+    -- change param2
+    local dir = minetest.facedir_to_dir(node.param2)
+
+    if mirrors.x then
+      dir.x = dir.x * -1
+    end
+    if mirrors.y then
+      dir.y = dir.y * -1
+    end
+    if mirrors.z then
+      dir.z = dir.z * -1
+    end
+
+    node.param2 = minetest.dir_to_facedir(dir)
+  end
+
+  -- mirror positions
   if mirrors.x then
     mirrored_pos.x = mirror_pos.x - (pos.x - mirror_pos.x)
   end
