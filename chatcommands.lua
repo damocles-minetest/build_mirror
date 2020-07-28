@@ -10,6 +10,7 @@
 
 minetest.register_chatcommand("mirror", {
   params = "[set|x|y|z|off]",
+  privs = { server = true },
   description = "",
   func = function(name, param)
     local player = minetest.get_player_by_name(name)
